@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// CTI Same part
+
+model Vehicle {
+  id Int @id @default(autoincrement())
+  brand String
+  model String
+  year Int
+  price Decimal
+
+  car Car?
+  motorcycle Motorcycle?
+  truck Truck?
+}
+
+
+
+model Car {
+  vehicleid Int @id @unique
+  vehicle Vehicle @relation(fields: [vehicleid], references: [id], onDelete: Cascade)
+  numberOfDoors Int
+  trunkCapacity Int // in liters
+  fuelType String // "gasoline", "diesel", "electric", "hybrid"
+}
+
+model Motorcycle {
+  vehicleid Int @id  @unique
+  vehicle Vehicle @relation(fields: [vehicleid], references: [id], onDelete: Cascade) 
+  engineCC Int // engine displacement
+  hasABS Boolean
+  bikeType String // "sport", "cruiser", "touring", "off-road"
+}
+
+model Truck {
+  vehicleid Int @id  @unique
+
+  vehicle Vehicle @relation(fields: [vehicleid], references: [id], onDelete: Cascade)
+
+  payloadCapacity Int // in kg
+  numberOfAxles Int
+  hasSleeper Boolean
+}
