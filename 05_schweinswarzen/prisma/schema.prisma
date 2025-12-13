@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Staff {
+  id Int @id @default(autoincrement())
+  first_name String
+  last_name String
+  email     String @unique
+  telefon   String @unique
+
+  teacher Teacher?
+  caretaker CareTaker?
+}
+
+model Teacher {
+  id Int @id
+  subject String
+  staff Staff @relation(fields: [id], references: [id])
+
+  teachings Teaching[]
+
+}
+
+model Student {
+  id Int @id @default(autoincrement())
+  first_name String
+  last_name String
+  email     String  @unique
+  telefon   String  @unique
+  grade     Int
+
+  teachings Teaching[]
+}
+
+
+
+model CareTaker {
+  id Int @id
+
+  staff Staff @relation(fields: [id], references: [id])
+}
+
+model Teaching {
+  teacherId Int
+  studentId Int
+
+  teacher Teacher @relation(fields: [teacherId], references: [id])
+  student Student @relation(fields: [studentId], references: [id])
+
+  // N:M Beziehung!
+  @@id([teacherId, studentId])
+}
+
+
+
+
+
+
