@@ -1,0 +1,128 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+
+// MITGLIED
+model Mitglied {
+  id Int @id @default(autoincrement())
+  first_name String
+  last_name String
+  email     String @unique
+  telefon   String?
+
+  // relation
+  buchungen     Buchung[]
+  wartelisten   Warteliste[]
+  bewertungen   Bewertung[]
+}
+
+// TRAINER
+model Trainer {
+  id Int @id @default(autoincrement())
+
+  first_name String
+  last_name String
+  telefon String @unique
+  email   String @unique
+
+  kurseinheiten Kurseinheit[]
+  bewertungen Bewertung[]
+}
+
+
+// KURS
+model Kurs {
+  id Int @id @default(autoincrement())
+
+  titel String
+  schwierigkeitgrad     Int
+  beschreibung String?
+
+  // relation
+  kurseinheiten Kurseinheit[]
+  bewertungen Bewertung[]
+}
+
+model Raum {
+  id Int @id @default(autoincrement())
+  bezeichnung String
+  kapazitaet Int
+
+  kurseinheiten Kurseinheit[]
+}
+
+// Bewertung
+model Bewertung {
+  id Int @id @default(autoincrement())
+  
+  rating Int
+  comment String?
+  createdAt  DateTime @default(now())
+
+
+  // relation
+  mitgliedId   Int 
+  mitglied   Mitglied @relation(fields: [mitgliedId], references: [id])
+
+  trainerId    Int? 
+  trainer Trainer? @relation(fields: [trainerId], references: [id])
+  
+  kursId       Int? 
+  kurs    Kurs? @relation(fields: [kursId], references: [id])
+}
+
+model Warteliste {
+  id Int @id @default(autoincrement())
+  
+  mitgliedId Int
+  mitglied Mitglied @relation(fields: [mitgliedId], references: [id])
+
+  kurseinheitId  Int 
+  kurseinheit Kurseinheit @relation(fields: [kurseinheitId], references: [id])
+  
+  position   Int
+}
+
+model Buchung {
+  id Int @id @default(autoincrement())
+  
+  mitgliedId Int 
+  mitglied Mitglied @relation(fields: [mitgliedId], references: [id])
+  
+  kurseinheitId Int 
+  kurseinheit Kurseinheit @relation(fields: [kurseinheitId], references: [id])
+}
+
+
+
+model Kurseinheit {
+  id Int @id @default(autoincrement())
+  
+  trainerId Int 
+  trainer Trainer @relation(fields: [trainerId], references: [id])
+
+  raumId Int 
+  raum Raum @relation(fields: [raumId], references: [id])
+
+  kursId Int
+  kurs Kurs @relation(fields: [kursId], references: [id])
+
+  maxTeilnehmer  Int 
+  buchungen Buchung[]
+  wartelisten Warteliste[]
+}
+
+
+
+
+
