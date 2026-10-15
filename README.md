@@ -1,26 +1,26 @@
 # PRISMA Training
 
-Übungen zur Datenmodellierung mit [Prisma ORM](https://www.prisma.io/) und SQLite. Jedes Unterverzeichnis ist ein eigenständiges Projekt mit Schema, Migrationen und Seed-Skript.
+Exercises in data modelling with [Prisma ORM](https://www.prisma.io/) and SQLite. Each subdirectory is a standalone project with a schema, migrations and a seed script.
 
-| Projekt | Thema |
+| Project | Topic |
 |---|---|
-| `01_sti` | Vererbung mit **Single Table Inheritance** (Fahrzeuge: Auto, Motorrad, LKW in einer Tabelle) |
-| `02_cti` | Vererbung mit **Class Table Inheritance** (gemeinsame Basistabelle plus Tabellen je Fahrzeugtyp) |
-| `03_vehichle_concrete_ti` | Vererbung mit **Concrete Table Inheritance** (eine eigene Tabelle je Fahrzeugtyp) |
-| `04_fitgym` | Datenmodell eines Fitnessstudios: Mitglieder, Trainer, Kurse, Räume, Buchungen, Warteliste, Bewertungen |
-| `05_schweinswarzen` | Datenmodell einer Schule: Personal, Lehrer, Schüler, Hausmeister, Unterricht |
+| `01_sti` | Inheritance with **single table inheritance** (vehicles: car, motorcycle, truck in one table) |
+| `02_cti` | Inheritance with **class table inheritance** (shared base table plus one table per vehicle type) |
+| `03_vehichle_concrete_ti` | Inheritance with **concrete table inheritance** (a separate table per vehicle type) |
+| `04_fitgym` | Data model of a gym: members, trainers, courses, rooms, bookings, waiting list, reviews |
+| `05_schweinswarzen` | Data model of a school: staff, teachers, students, caretakers, teaching assignments |
 
-## Verwendung
+## Usage
 
 ```bash
-cd 01_sti            # oder ein anderes Projekt
+cd 01_sti            # or any other project
 npm install
 echo 'DATABASE_URL="file:./dev.db"' > .env
 npx prisma migrate dev
 node prisma/seed.mjs
-npx prisma studio    # Daten im Browser ansehen
+npx prisma studio    # browse the data in the browser
 ```
 
-## Technologien
+## Technologies
 
 Prisma 6, SQLite, Node.js, TypeScript
