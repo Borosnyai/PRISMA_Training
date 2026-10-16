@@ -18,12 +18,12 @@ model Vehicle {
   year Int
   price Decimal
 
-  vehicleType VehicleType  // Milyen tipusu  ajarmü
+  vehicleType VehicleType  // type of vehicle (discriminator)
 
   // Car
   numberOfDoors Int?
   trunkCapacity Int?
-  fuelType String? //"gasoline", "diesel", "eletric", "hybrid"
+  fuelType String? //"gasoline", "diesel", "electric", "hybrid"
 
   // Motorcycle
   engineCC Int?

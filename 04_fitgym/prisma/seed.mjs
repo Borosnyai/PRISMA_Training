@@ -54,7 +54,7 @@ async function main() {
         },
     });
 
-    // KURSEINHEIT  ✅ ELŐBB!
+    // KURSEINHEIT (must be created before the waiting list)
     const kurseinheit = await prisma.kurseinheit.create({
         data: {
             trainerId: trainer1.id,
@@ -64,7 +64,7 @@ async function main() {
         },
     });
 
-    // WARTELISTE  ✅ MOST MÁR OK
+    // WARTELISTE (created after KURSEINHEIT)
     await prisma.warteliste.create({
         data: {
             mitgliedId: mitglied2.id,
