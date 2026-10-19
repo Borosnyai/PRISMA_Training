@@ -116,7 +116,7 @@ async function main() {
         ]
     });
 
-        // Aufgabe 2 - getStudent
+        // Task 2 - getStudent
         async function getStudent(teacherId) {
             return prisma.student.findMany({
                 where: {
